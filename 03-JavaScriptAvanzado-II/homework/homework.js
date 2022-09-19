@@ -19,8 +19,12 @@ function counter() {
   otroContador()      // 2
   otroContador()      // 3
    */
+  let suma = 0;
+  const funcionInterna = () => {
+    return (suma += 1);
+  };
+  return funcionInterna;
 }
-
 function cacheFunction(cb) {
   /*
   Ejercicio 2
@@ -41,6 +45,18 @@ function cacheFunction(cb) {
   squareCache(5)    // no volverá a invocar a square, simplemente buscará en la caché cuál es el resultado de square(5) y lo retornará (tip: si usaste un objeto, podés usar hasOwnProperty) 
 
   */
+
+  const obj = {};
+
+  return function (arg) {
+    if (obj[arg]) {
+      console.log(obj);
+      return obj[arg];
+    }
+    obj[arg] = cb(arg);
+    console.log(obj);
+    return obj[arg];
+  };
 }
 
 // Bind
@@ -67,22 +83,21 @@ function getNombre() {
   Usando el método bind() guardar, en las dos variables declaradas a continuación, dos funciones que actúen como getNombre pero retornen el nombre del instructor y del alumno, respectivamente.
 */
 
-let getNombreInstructor;
-let getNombreAlumno;
+let getNombreInstructor = getNombre.bind(instructor);
+let getNombreAlumno = getNombre.bind(alumno);
 
-/*
-  Ejercicio 4
+/*Ejercicio 4
   
-  Sin modificar la función crearCadena, usar bind para guardar, en las tres variables declaradas a continuación, tres funciones que retornen una cadena (string) y el delimitador especificado (asteriscos, guiones, y guiones bajos, respectivamente). Las funciones obtenidas deberían recibir solamente un argumento - la cadena de texto - ya que los otros argumentos habrán sido "bindeados". 
+Sin modificar la función crearCadena, usar bind para guardar, en las tres variables declaradas a continuación, tres funciones que retornen una cadena (string) y el delimitador especificado (asteriscos, guiones, y guiones bajos, respectivamente). Las funciones obtenidas deberían recibir solamente un argumento - la cadena de texto - ya que los otros argumentos habrán sido "bindeados". 
 */
 
 function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {
   return delimitadorIzquierda + cadena + delimitadorDerecha;
 }
 
-let textoAsteriscos;
-let textoGuiones;
-let textoUnderscore;
+let textoAsteriscos = crearCadena.bind(null, "*", "*");
+let textoGuiones = crearCadena.bind(null, "-", "-");
+let textoUnderscore = crearCadena.bind(null, "_", "_");
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
